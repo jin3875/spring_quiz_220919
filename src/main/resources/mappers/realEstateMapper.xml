@@ -19,4 +19,42 @@
 		WHERE
 			`id` = #{id}
 	</select>
+	
+	<select id="selectRealEstateRentPriceList" parameterType="int" resultType="com.quiz.lesson03.model.RealEstate">
+		SELECT
+			`id`
+			,`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`real_estate`
+		WHERE
+			`rentPrice` &lt; #{rentPrice}
+	</select>
+	
+	<select id="selectRealEstateAreaAndPriceList" parameterType="HashMap" resultType="com.quiz.lesson03.model.RealEstate">
+		SELECT
+			`id`
+			,`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`real_estate`
+		WHERE
+			`type` = '매매'
+			AND `area` &gt;= #{area}
+			AND `price` &lt;= #{price}
+		ORDER BY
+			`createdAt` DESC
+	</select>
 </mapper>
