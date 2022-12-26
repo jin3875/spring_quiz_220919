@@ -1,6 +1,5 @@
 package com.quiz.lesson03;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +18,21 @@ public class Lesson03Quiz01RestController {
 	private RealEstateBO realEstateBO;
 	
 	@RequestMapping("/1")
-	public RealEstate quiz01(@RequestParam(value="id") int id) {
-		return realEstateBO.getRealEstate(id);
+	public RealEstate quiz01_1(@RequestParam(value="id") int id) {
+		return realEstateBO.getRealEstateById(id);
 	}
 	
 	@RequestMapping("/2")
-	public List<RealEstate> quiz02(@RequestParam(value="rent_price") int rentPrice) {
-		return realEstateBO.getRealEstateRentPriceList(rentPrice);
+	public List<RealEstate> quiz01_2(@RequestParam(value="rent_price") int rentPrice) {
+		return realEstateBO.getRealEstateListByRentPrice(rentPrice);
 	}
 	
 	@RequestMapping("/3")
-	public List<RealEstate> quiz03(
-			@RequestParam(value="area") int area, @RequestParam(value="price") int price
+	public List<RealEstate> quiz01_3(
+			@RequestParam(value="area") int area,
+			@RequestParam(value="price") int price
 	) {
-		HashMap<String, Integer> areaAndPrice = new HashMap<>();
-		areaAndPrice.put("area", area);
-		areaAndPrice.put("price", price);
-		
-		return realEstateBO.getRealEstateAreaAndPriceList(areaAndPrice);
+		return realEstateBO.getRealEstateListByAreaPrice(area, price);
 	}
 
 }
