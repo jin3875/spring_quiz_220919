@@ -26,6 +26,7 @@
 				<label for="temperature">온도</label>
 				<input type="text" id="temperature" name="temperature" class="form-control col-3" placeholder="온도를 입력하세요">
 			</div>
+			<input type="submit" class="btn btn-primary" value="추가">
 		</form>
 	</div>
 </body>
