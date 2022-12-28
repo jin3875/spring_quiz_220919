@@ -20,7 +20,7 @@
 			</div>
 			<div class="form-group">
 				<label for="profileImageUrl">프로필 사진 url</label>
-				<input type="text" id="profileImageUrl" name="profileImageUrl" class="form-control col-8" placeholder="url을 입력하세요">
+				<input type="text" id="profileImageUrl" name="profileImageUrl" class="form-control" placeholder="url을 입력하세요">
 			</div>
 			<div class="form-group">
 				<label for="temperature">온도</label>
