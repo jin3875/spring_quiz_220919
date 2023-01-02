@@ -1,2 +1,5 @@
 @charset "UTF-8";
-body {background-color:#999;}
+
+.main {height:auto;}
+nav {background:#0098E0;}
+footer {height:100px;}

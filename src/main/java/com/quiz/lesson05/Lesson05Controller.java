@@ -175,5 +175,10 @@ public class Lesson05Controller {
 	public String quiz05() {
 		return "lesson05/quiz05";
 	}
+	
+	@GetMapping("/quiz05_1")
+	public String quiz05_1() {
+		return "lesson05/quiz05_1";
+	}
 
 }
