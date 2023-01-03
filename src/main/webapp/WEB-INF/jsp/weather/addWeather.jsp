@@ -11,12 +11,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	
 	<script>
 		$(function() {
 			$('#datepicker').datepicker({
 				dateFormat: "yy-mm-dd"
+				,showMonthAfterYear: true
+				,yearSuffix: "년"
+				,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+				,dayNamesMin: ['일','월','화','수','목','금','토']
 			});
 		});
 	</script>

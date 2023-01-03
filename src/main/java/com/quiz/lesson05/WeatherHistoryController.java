@@ -1,5 +1,8 @@
 package com.quiz.lesson05;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.lesson05.bo.WeatherHistoryBO;
 import com.quiz.lesson05.model.WeatherHistory;
@@ -34,9 +38,30 @@ public class WeatherHistoryController {
 	
 	@PostMapping("/add_weather")
 	public String addWeather(
-			WeatherHistory weatherHistory,
+			@RequestParam("date") String dateStr,
+			@RequestParam("weather") String weather,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation,
+			@RequestParam("microDust") String microDust,
+			@RequestParam("windSpeed") double windSpeed,
 			Model model
 	) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+		try {
+			date = format.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		WeatherHistory weatherHistory = new WeatherHistory();
+		weatherHistory.setDate(date);
+		weatherHistory.setWeather(weather);
+		weatherHistory.setTemperatures(temperatures);
+		weatherHistory.setPrecipitation(precipitation);
+		weatherHistory.setMicroDust(microDust);
+		weatherHistory.setWindSpeed(windSpeed);
+		
 		weatherHistoryBO.addWeatherHistory(weatherHistory);
 		
 		List<WeatherHistory> weatherHistoryList = weatherHistoryBO.getWeatherHistoryList();
