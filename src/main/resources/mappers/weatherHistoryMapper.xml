@@ -18,7 +18,7 @@
 			`weather_history`
 	</select>
 	
-	<insert id="insertWeatherHistory" parameterType="com.quiz.lesson05.model.WeatherHistory">
+	<insert id="insertWeatherHistory" parameterType="map">
 		INSERT INTO `weather_history`
 		(
 			`date`

@@ -8,8 +8,8 @@
 	<c:when test="${!empty reviewList}">
 		<c:forEach var="review" items="${reviewList}">
 		<div class="border border-info rounded mt-3 mb-3 p-3">
-			<div class="d-flex">
-			<h5 class="font-weight-bold mr-3">${review.userName}</h5>
+			<div class="d-flex align-items-center mb-2">
+			<h5 class="font-weight-bold mr-3 mb-0">${review.userName}</h5>
 			<c:forEach begin="0" end="4" step="1" var="count">
 				<c:choose>
 					<c:when test="${review.point >= 1}">

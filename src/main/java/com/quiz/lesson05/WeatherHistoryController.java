@@ -1,8 +1,5 @@
 package com.quiz.lesson05;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,36 +35,19 @@ public class WeatherHistoryController {
 	
 	@PostMapping("/add_weather")
 	public String addWeather(
-			@RequestParam("date") String dateStr,
+//			@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date, // 1)
+			@RequestParam("date") String date, // 2) String으로 insert를 해도 DB에서는 date 타입으로 저장됨
 			@RequestParam("weather") String weather,
 			@RequestParam("temperatures") double temperatures,
 			@RequestParam("precipitation") double precipitation,
 			@RequestParam("microDust") String microDust,
-			@RequestParam("windSpeed") double windSpeed,
-			Model model
+			@RequestParam("windSpeed") double windSpeed
+//			HttpServletResponse response // 1)
 	) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-		try {
-			date = format.parse(dateStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		weatherHistoryBO.addWeatherHistory(date, weather, temperatures, precipitation, microDust, windSpeed);
 		
-		WeatherHistory weatherHistory = new WeatherHistory();
-		weatherHistory.setDate(date);
-		weatherHistory.setWeather(weather);
-		weatherHistory.setTemperatures(temperatures);
-		weatherHistory.setPrecipitation(precipitation);
-		weatherHistory.setMicroDust(microDust);
-		weatherHistory.setWindSpeed(windSpeed);
-		
-		weatherHistoryBO.addWeatherHistory(weatherHistory);
-		
-		List<WeatherHistory> weatherHistoryList = weatherHistoryBO.getWeatherHistoryList();
-		model.addAttribute("weatherHistoryList", weatherHistoryList);
-		
-		return "weather/weatherHistory";
+//		response.sendRedirect("/lesson05/weather_history_view"); // 1)
+		return "redirect:/lesson05/weather_history_view"; // 2)
 	}
 
 }
