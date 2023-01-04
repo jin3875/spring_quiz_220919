@@ -27,7 +27,7 @@
 				<tr>
 					<td>${favorite.id}</td>
 					<td>${favorite.name}</td>
-					<td>${favorite.url}</td>
+					<td><a href="${favorite.url}">${favorite.url}</a></td>
 				</tr>
 				</c:forEach>
 			</tbody>

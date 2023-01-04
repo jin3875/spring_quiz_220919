@@ -32,18 +32,18 @@
 				let name = $('#name').val().trim();
 				if (name == '') {
 					alert("제목을 입력하세요");
-					return false;
+					return;
 				}
 				
 				let url = $('#url').val().trim();
 				if (url.length < 1) {
 					alert("주소를 입력하세요");
-					return false;
+					return;
 				}
 				
 				if (!(url.startsWith("http") || url.startsWith("https"))) {
 					alert("http 또는 https를 입력해주세요");
-					return false;
+					return;
 				}
 				
 				$.ajax({
@@ -53,8 +53,10 @@
 					
 					, success:function(data) {
 						// alert(data);
-						
 						location.href="/lesson06/quiz01/after_add_favorite_view"
+					}
+					, error:function(e) {
+						alert("에러");
 					}
 				});
 			});
