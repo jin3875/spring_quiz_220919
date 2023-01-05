@@ -13,22 +13,24 @@
 <body>
 	<div class="container">
 		<h1>즐겨찾기 추가하기</h1>
-		<div class="mb-3">
+		<div class="form-group mb-3">
 			<label for="name">제목</label>
 			<input type="text" id="name" class="form-control" placeholder="제목을 입력하세요">
 		</div>
-		<div class="mb-3">
+		<div class="form-group mb-3">
 			<label for="url">주소</label>
-			<input type="text" id="url" class="form-control" placeholder="주소를 입력하세요">
+			<div class="d-flex">
+				<input type="text" id="url" class="form-control mr-3" placeholder="주소를 입력하세요">
+				<input type="button" id="urlCheckBtn" class="btn btn-info" value="중복확인">
+			</div>
+			<small id="urlStatusArea"></small>
 		</div>
-		<input type="button" id="add" class="btn btn-success w-100" value="추가">
+		<input type="button" id="addFavoriteBtn" class="btn btn-success w-100" value="추가">
 	</div>
 	
 	<script>
 		$(document).ready(function() {
-			$('#add').on('click', function() {
-				// alert("클릭");
-				
+			$('#addFavoriteBtn').on('click', function() {
 				let name = $('#name').val().trim();
 				if (name == '') {
 					alert("제목을 입력하세요");
@@ -41,8 +43,14 @@
 					return;
 				}
 				
-				if (!(url.startsWith("http") || url.startsWith("https"))) {
-					alert("http 또는 https를 입력해주세요");
+				if (url.startsWith("http") == false && url.startsWith("https") == false) {
+					alert("주소 형식이 잘못되었습니다");
+					return;
+				}
+				
+				var urlStatusArea = $('#urlStatusArea').html;
+				if (urlStatusArea != '<span class="text-danger">저장 가능한 url입니다.</span>') {
+					alert("중복확인을 하세요");
 					return;
 				}
 				
@@ -51,12 +59,39 @@
 					, url:"/lesson06/quiz01/add_favorite"
 					, data:{"name":name, "url":url}
 					
-					, success:function(data) {
-						// alert(data);
-						location.href="/lesson06/quiz01/after_add_favorite_view"
+					, success:function(data) { // string json => object
+						// alert(data); // [object Object]
+						
+						if (data.result == "성공") {
+							location.href="/lesson06/quiz01/after_add_favorite_view"
+						}
 					}
 					, error:function(e) {
-						alert("에러");
+						alert("에러 " + e);
+					}
+				});
+			});
+			
+			$('#urlCheckBtn').on('click', function() {
+				$('#urlStatusArea').empty();
+				
+				let url = $('#url').val().trim();
+				
+				$.ajax({
+					type:"GET"
+					, url:"/lesson06/quiz02/is_duplication"
+					, data:{"url":url}
+					
+					, success:function(data) {
+						if (data.is_duplication) {
+							$('#urlStatusArea').append('<span class="text-danger">중복된 url입니다.</span>')
+							return;
+						} else {
+							$('#urlStatusArea').append('<span class="text-danger">저장 가능한 url입니다.</span>')
+						}
+					}
+					, error:function() {
+						alert("실패 " + e);
 					}
 				});
 			});

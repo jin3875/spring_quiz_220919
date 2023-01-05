@@ -1,6 +1,8 @@
 package com.quiz.lesson06;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +30,16 @@ public class Lesson06Controller {
 	
 	@ResponseBody
 	@PostMapping("/quiz01/add_favorite")
-	public String addFavorite(
+	public Map<String, String> addFavorite(
 			@RequestParam("name") String name,
 			@RequestParam("url") String url
 	) {
 		favoriteBO.addFavorite(name, url);
 		
-		return "성공";
+		Map<String, String> result = new HashMap<>();
+		result.put("result", "성공");
+		
+		return result; // jackson => JSON String
 	}
 	
 	@GetMapping("/quiz01/after_add_favorite_view")
@@ -43,6 +48,14 @@ public class Lesson06Controller {
 		model.addAttribute("favoriteList", favoriteList);
 		
 		return "lesson06/quiz01/afterAddFavorite";
+	}
+	
+	@ResponseBody
+	@GetMapping("/quiz02/is_duplication")
+	public Map<String, Boolean> isDuplication(@RequestParam("url") String url) {
+		Map<String, Boolean> result = new HashMap<>();
+		result.put("is_duplication", favoriteBO.existFavoriteByUrl(url));
+		return result;
 	}
 
 }

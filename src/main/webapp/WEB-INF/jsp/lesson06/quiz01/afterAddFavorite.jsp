@@ -20,6 +20,7 @@
 					<th>No.</th>
 					<th>이름</th>
 					<th>주소</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,10 +29,19 @@
 					<td>${favorite.id}</td>
 					<td>${favorite.name}</td>
 					<td><a href="${favorite.url}">${favorite.url}</a></td>
+					<td><input type="button" class="delFavoriteBtn btn btn-danger" value="삭제"></td>
 				</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$('.delFavoriteBtn').on('click', function() {
+				alert();
+			});
+		});
+	</script>
 </body>
 </html>
