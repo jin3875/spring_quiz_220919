@@ -57,5 +57,19 @@ public class Lesson06Controller {
 		result.put("is_duplication", favoriteBO.existFavoriteByUrl(url));
 		return result;
 	}
+	
+	@ResponseBody
+	@GetMapping("/quiz02/delete_favorite")
+	public Map<String, Boolean> deleteFavorite(@RequestParam("id") int id) {
+		Map<String, Boolean> result = new HashMap<>();
+		
+		if (favoriteBO.deleteFavoriteById(id) == 1) {
+			result.put("is_deleted", true);
+		} else {
+			result.put("is_deleted", false);
+		}
+		
+		return result;
+	}
 
 }

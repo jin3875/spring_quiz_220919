@@ -39,7 +39,22 @@
 	<script>
 		$(document).ready(function() {
 			$('.delFavoriteBtn').on('click', function() {
-				alert();
+				let id = $(this).parent().parent().children().eq(0).text();
+				
+				$.ajax({
+					type:"GET"
+					, url:"/lesson06/quiz02/delete_favorite"
+					, data:{"id":id}
+					
+					, success:function(data) {
+						if (data.is_deleted) {
+							location.href="/lesson06/quiz01/after_add_favorite_view";
+						}
+					}
+					, error:function(e) {
+						alert("실패 " + e);
+					}
+				});
 			});
 		});
 	</script>

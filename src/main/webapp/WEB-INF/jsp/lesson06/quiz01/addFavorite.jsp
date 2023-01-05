@@ -32,12 +32,14 @@
 		$(document).ready(function() {
 			$('#addFavoriteBtn').on('click', function() {
 				let name = $('#name').val().trim();
+				let url = $('#url').val().trim();
+				let urlStatusArea = $('#urlStatusArea').html();
+				
 				if (name == '') {
 					alert("제목을 입력하세요");
 					return;
 				}
 				
-				let url = $('#url').val().trim();
 				if (url.length < 1) {
 					alert("주소를 입력하세요");
 					return;
@@ -48,7 +50,6 @@
 					return;
 				}
 				
-				var urlStatusArea = $('#urlStatusArea').html;
 				if (urlStatusArea != '<span class="text-danger">저장 가능한 url입니다.</span>') {
 					alert("중복확인을 하세요");
 					return;
@@ -63,7 +64,7 @@
 						// alert(data); // [object Object]
 						
 						if (data.result == "성공") {
-							location.href="/lesson06/quiz01/after_add_favorite_view"
+							location.href="/lesson06/quiz01/after_add_favorite_view";
 						}
 					}
 					, error:function(e) {
@@ -74,8 +75,17 @@
 			
 			$('#urlCheckBtn').on('click', function() {
 				$('#urlStatusArea').empty();
-				
 				let url = $('#url').val().trim();
+				
+				if (url.length < 1) {
+					alert("주소를 입력하세요");
+					return;
+				}
+				
+				if (url.startsWith("http") == false && url.startsWith("https") == false) {
+					alert("주소 형식이 잘못되었습니다");
+					return;
+				}
 				
 				$.ajax({
 					type:"GET"
@@ -84,10 +94,10 @@
 					
 					, success:function(data) {
 						if (data.is_duplication) {
-							$('#urlStatusArea').append('<span class="text-danger">중복된 url입니다.</span>')
+							$('#urlStatusArea').append('<span class="text-danger">중복된 url입니다.</span>');
 							return;
 						} else {
-							$('#urlStatusArea').append('<span class="text-danger">저장 가능한 url입니다.</span>')
+							$('#urlStatusArea').append('<span class="text-danger">저장 가능한 url입니다.</span>');
 						}
 					}
 					, error:function() {
