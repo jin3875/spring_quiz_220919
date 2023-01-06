@@ -19,11 +19,12 @@
 		</div>
 		<div class="form-group mb-3">
 			<label for="url">주소</label>
-			<div class="d-flex">
+			<div class="d-flex"> <!-- 또는 class="form-inline" -->
 				<input type="text" id="url" class="form-control mr-3" placeholder="주소를 입력하세요">
-				<input type="button" id="urlCheckBtn" class="btn btn-info" value="중복확인">
+				<input type="button" id="CheckBtn" class="btn btn-info" value="중복확인">
 			</div>
-			<small id="urlStatusArea"></small>
+			<small id="duplicationText" class="text-danger d-none">중복된 url입니다.</small>
+			<small id="availableText" class="text-danger d-none">저장 가능한 url입니다.</small>
 		</div>
 		<input type="button" id="addFavoriteBtn" class="btn btn-success w-100" value="추가">
 	</div>
@@ -33,7 +34,6 @@
 			$('#addFavoriteBtn').on('click', function() {
 				let name = $('#name').val().trim();
 				let url = $('#url').val().trim();
-				let urlStatusArea = $('#urlStatusArea').html();
 				
 				if (name == '') {
 					alert("제목을 입력하세요");
@@ -50,7 +50,7 @@
 					return;
 				}
 				
-				if (urlStatusArea != '<span class="text-danger">저장 가능한 url입니다.</span>') {
+				if ($('#availableText').hasClass("d-none")) {
 					alert("중복확인을 하세요");
 					return;
 				}
@@ -73,8 +73,7 @@
 				});
 			});
 			
-			$('#urlCheckBtn').on('click', function() {
-				$('#urlStatusArea').empty();
+			$('#CheckBtn').on('click', function() {
 				let url = $('#url').val().trim();
 				
 				if (url.length < 1) {
@@ -88,20 +87,21 @@
 				}
 				
 				$.ajax({
-					type:"GET"
-					, url:"/lesson06/quiz02/is_duplication"
+					type:"POST"
+					, url:"/lesson06/quiz02/is_duplication_url"
 					, data:{"url":url}
 					
 					, success:function(data) {
 						if (data.is_duplication) {
-							$('#urlStatusArea').append('<span class="text-danger">중복된 url입니다.</span>');
-							return;
+							$('#availableText').addClass("d-none");
+							$('#duplicationText').removeClass("d-none");
 						} else {
-							$('#urlStatusArea').append('<span class="text-danger">저장 가능한 url입니다.</span>');
+							$('#duplicationText').addClass("d-none");
+							$('#availableText').removeClass("d-none");
 						}
 					}
 					, error:function() {
-						alert("실패 " + e);
+						alert("에러 " + e);
 					}
 				});
 			});

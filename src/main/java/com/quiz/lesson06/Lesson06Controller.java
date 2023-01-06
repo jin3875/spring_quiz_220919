@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,22 +52,39 @@ public class Lesson06Controller {
 	}
 	
 	@ResponseBody
-	@GetMapping("/quiz02/is_duplication")
-	public Map<String, Boolean> isDuplication(@RequestParam("url") String url) {
+	@PostMapping("/quiz02/is_duplication_url")
+	public Map<String, Boolean> isDuplicationUrl(@RequestParam("url") String url) {
 		Map<String, Boolean> result = new HashMap<>();
-		result.put("is_duplication", favoriteBO.existFavoriteByUrl(url));
+		
+		Favorite favorite = favoriteBO.getFavoriteByUrl(url);
+		if (favorite != null) {
+			result.put("is_duplication", true);
+		} else {
+			result.put("is_duplication", false);
+		}
+		
 		return result;
 	}
 	
+//	Mapping 종류
+//	Read   - GET : 조회 - 쿼리스트링, request body 없음
+//	Create - POST : insert, add
+//	Update - PUT : 수정
+//	Delete - DELETE : 삭제
+	
 	@ResponseBody
-	@GetMapping("/quiz02/delete_favorite")
-	public Map<String, Boolean> deleteFavorite(@RequestParam("id") int id) {
-		Map<String, Boolean> result = new HashMap<>();
+	@DeleteMapping("/quiz02/delete_favorite")
+	public Map<String, Object> deleteFavorite(@RequestParam("id") int id) {
+		Map<String, Object> result = new HashMap<>();
 		
-		if (favoriteBO.deleteFavoriteById(id) == 1) {
-			result.put("is_deleted", true);
+		int row = favoriteBO.deleteFavoriteById(id);
+		if (row > 0) {
+			result.put("code", 1); // 성공
+			result.put("result", "성공");
 		} else {
-			result.put("is_deleted", false);
+			result.put("code", 500); // 실패
+			result.put("result", "실패");
+			result.put("error_message", "삭제된 행이 없습니다.");
 		}
 		
 		return result;
