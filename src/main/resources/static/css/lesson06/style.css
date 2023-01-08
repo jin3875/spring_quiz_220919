@@ -3,8 +3,14 @@
 a, a:hover {color:#000; text-decoration:none;}
 
 header {height:100px;}
-nav {background-color:darkorange;}
 .contents {height:auto;}
 footer {height:80px;}
 
-.reservation-form {width:500px; margin:auto;}
+nav {background-color:chocolate;}
+nav a:hover {background-color:saddlebrown;}
+
+.reservation-box {width:500px; margin:auto;}
+
+.main-box {height:250px;}
+.main-box-side {background-color:saddlebrown;}
+.main-box-center {background-color:chocolate;}

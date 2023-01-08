@@ -21,7 +21,7 @@
 			<jsp:include page="menu.jsp" />
 		</nav>
 		<section class="contents">
-			<jsp:include page="selectBooking.jsp" />
+			<jsp:include page="mainContent.jsp" />
 		</section>
 		<footer>
 			<jsp:include page="footer.jsp" />
