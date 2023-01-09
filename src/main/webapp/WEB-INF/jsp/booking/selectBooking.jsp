@@ -20,9 +20,7 @@
 		<c:forEach var="booking" items="${bookingList}">
 		<tr>
 			<td>${booking.name}</td>
-			<td>
-				<fmt:formatDate value="${booking.date}" pattern="yyyy년 M월 d일" />
-			</td>
+			<td><fmt:formatDate value="${booking.date}" pattern="yyyy년 M월 d일" /></td>
 			<td>${booking.day}</td>
 			<td>${booking.headcount}</td>
 			<td>${booking.phoneNumber}</td>
@@ -33,6 +31,9 @@
 					</c:when>
 					<c:when test="${booking.state eq '대기중'}">
 						<span class="text-info">${booking.state}</span>
+					</c:when>
+					<c:when test="${booking.state eq '취소'}">
+						<span class="text-danger">${booking.state}</span>
 					</c:when>
 					<c:otherwise>
 						${booking.state}
@@ -63,7 +64,7 @@
 					}
 				}
 				, error:function(e) {
-					alert("에러 " + e);
+					alert("삭제하는데 통신이 실패했습니다.");
 				}
 			});
 		});

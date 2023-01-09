@@ -1,7 +1,5 @@
 package com.quiz.lesson06;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +44,7 @@ public class BookingController {
 		} else {
 			result.put("code", 500);
 			result.put("result", "실패");
-			result.put("error_message", "삭제된 행이 없습니다.");
+			result.put("error_message", "삭제하는데 실패했습니다.");
 		}
 		
 		return result;
@@ -68,15 +66,8 @@ public class BookingController {
 	) {
 		Map<String, Object> result = new HashMap<>();
 		
-		int row = bookingBO.addBooking(name, headcount, day, date, phoneNumber);
-		if (row > 0) {
-			result.put("code", 1);
-			result.put("result", "성공");
-		} else {
-			result.put("code", 500);
-			result.put("result", "실패");
-			result.put("error_message", "추가된 행이 없습니다.");
-		}
+		bookingBO.addBooking(name, headcount, day, date, phoneNumber);
+		result.put("result", "성공");
 		
 		return result;
 	}
@@ -94,23 +85,12 @@ public class BookingController {
 	) {
 		Map<String, Object> result = new HashMap<>();
 		
-		Booking booking = bookingBO.getBookingListByNameAndPhoneNumber(name, phoneNumber);
+		Booking booking = bookingBO.getLatestBookingByNamePhoneNumber(name, phoneNumber);
 		if (booking != null) {
-			Date date = booking.getDate();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String dateStr = sdf.format(date);
-			
+			result.put("booking", booking);
 			result.put("code", 1);
-			result.put("result", "성공");
-			result.put("name", booking.getName());
-			result.put("date", dateStr);
-			result.put("day", booking.getDay());
-			result.put("headcount", booking.getHeadcount());
-			result.put("state", booking.getState());
 		} else {
 			result.put("code", 500);
-			result.put("result", "실패");
-			result.put("error_message", "예약 내역이 없습니다");
 		}
 		
 		return result;

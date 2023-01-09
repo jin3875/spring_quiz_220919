@@ -4,31 +4,31 @@
 <h2 class="text-center font-weight-bold m-4">예약하기</h2>
 <div class="reservation-box">
 	<div class="form-group">
-		<label for="name">이름</label>
+		<label for="name"><b>이름</b></label>
 		<input type="text" id="name" class="form-control" placeholder="예) 홍길동">
 		<small id="noNameText" class="text-danger d-none">이름을 입력하세요</small>
 		<small id="wrongNameText" class="text-danger d-none">이름 형식을 지켜주세요</small>
 	</div>
 	<div class="form-group">
-		<label for="date">예약날짜</label>
+		<label for="date"><b>예약날짜</b></label>
 		<input type="text" id="date" class="form-control" placeholder="예) 2023-01-01">
 		<small id="noDateText" class="text-danger d-none">예약날짜를 입력하세요</small>
 		<small id="wrongDateText" class="text-danger d-none">예약날짜 형식을 지켜주세요</small>
 	</div>
 	<div class="form-group">
-		<label for="day">숙박일수</label>
+		<label for="day"><b>숙박일수</b></label>
 		<input type="text" id="day" class="form-control" placeholder="예) 3">
 		<small id="noDayText" class="text-danger d-none">숙박일수를 입력하세요</small>
 		<small id="wrongDayText" class="text-danger d-none">숙박일수 형식을 지켜주세요</small>
 	</div>
 	<div class="form-group">
-		<label for="headcount">숙박인원</label>
+		<label for="headcount"><b>숙박인원</b></label>
 		<input type="text" id="headcount" class="form-control" placeholder="예) 5">
 		<small id="noHeadcountText" class="text-danger d-none">숙박인원을 입력하세요</small>
 		<small id="wrongHeadcountText" class="text-danger d-none">숙박인원 형식을 지켜주세요</small>
 	</div>
 	<div class="form-group">
-		<label for="phoneNumber">전화번호</label>
+		<label for="phoneNumber"><b>전화번호</b></label>
 		<input type="text" id="phoneNumber" class="form-control" placeholder="예) 010-1234-5678">
 		<small id="noPhoneNumberText" class="text-danger d-none">전화번호를 입력하세요</small>
 		<small id="wrongPhoneNumberText" class="text-danger d-none">전화번호 형식을 지켜주세요</small>
@@ -44,14 +44,15 @@
 			, yearSuffix: "년"
 			, monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 			, dayNamesMin: ['일','월','화','수','목','금','토']
+			, minDate : 0
 		});
 		
 		$('#addBookingBtn').on('click', function() {
 			let name = $('#name').val().trim();
-			let date = $('#date').val();
-			let day = $('#day').val();
-			let headcount = $('#headcount').val();
-			let phoneNumber = $('#phoneNumber').val();
+			let date = $('#date').val().trim();
+			let day = $('#day').val().trim();
+			let headcount = $('#headcount').val().trim();
+			let phoneNumber = $('#phoneNumber').val().trim();
 			
 			let nameFormat = /^[가-힣]{2,15}$/;
 			let dateFormat = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
@@ -143,16 +144,13 @@
 				, data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
 				
 				, success:function(data) {
-					alert("예약 성공");
-					
-					if (data.code == 1) {
+					if (data.result == "성공") {
+						alert("예약되었습니다.");
 						location.href="/booking/booking_list_view";
-					} else if (data.code == 500) {
-						alert(data.error_message);
 					}
 				}
 				, error:function(e) {
-					alert("에러 " + e);
+					alert("예약하는데 실패했습니다.");
 				}
 			});
 		});
